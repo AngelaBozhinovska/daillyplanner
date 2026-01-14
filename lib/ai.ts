@@ -25,10 +25,19 @@ export async function generatePlan(prompt: string): Promise<string> {
       })
     });
 
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+
     const data = await response.json();
+
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw new Error('Invalid response format from API');
+    }
+
     return data.choices[0].message.content;
   } catch (error) {
     console.error('Error generating plan:', error);
-    throw new Error('Failed to generate plan');
+    throw new Error('Failed to generate plan. Please try again.');
   }
 }

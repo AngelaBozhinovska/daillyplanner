@@ -40,16 +40,16 @@ export default function TaskModal({
   useEffect(() => {
     if (initialTask) {
       setTitle(initialTask.title);
+
+      const taskDate = initialTask.date ? new Date(initialTask.date) : new Date();
+
       if (initialTask.time) {
         const [hours, minutes] = initialTask.time.split(':').map(Number);
-        const newDate = new Date();
-        newDate.setHours(hours);
-        newDate.setMinutes(minutes);
-        setDate(newDate);
+        taskDate.setHours(hours);
+        taskDate.setMinutes(minutes);
       }
-      if (initialTask.date) {
-        setDate(initialTask.date);
-      }
+
+      setDate(taskDate);
     }
   }, [initialTask]);
 

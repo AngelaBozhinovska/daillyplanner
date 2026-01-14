@@ -38,19 +38,21 @@ export default function TodayScreen() {
   };
 
   const handleTaskSubmit = (taskData: { title: string; time: string; date: Date }) => {
+    const dateString = taskData.date.toISOString().split('T')[0];
+
     if (modalMode === 'edit' && selectedTask) {
       updateTask(selectedTask.id, {
         ...selectedTask,
         title: taskData.title,
         time: taskData.time,
-        date: taskData.date,
+        date: dateString,
       });
     } else {
       addTask({
         id: Date.now().toString(),
         title: taskData.title,
         time: taskData.time,
-        date: taskData.date,
+        date: dateString,
         completed: false,
       });
     }
